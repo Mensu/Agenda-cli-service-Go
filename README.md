@@ -98,7 +98,7 @@ docker run --rm --network host -v $PATH_TO_CLI_DATA:/data mensu/agenda-cli-servi
 
 ### 持续集成
 
-- 使用 [``Travis CI``](https://travis-ci.org/Mensu/Agenda-Go)，通过执行 go test 命令运行编写好的测试文件进行持续集成
+- 使用 [``Travis CI``](https://travis-ci.org/Mensu/Agenda-cli-service-go)，通过执行 go test 命令运行编写好的测试文件进行持续集成
 - 从最开始的开发开始，**边开发边写对应的测试**，在一次次提交的过程中不断集成，减少新的改动破坏原有功能的可能性，为项目功能的稳定提供有力保障
 - 测试内容包括
   + cli 的 mock 测试
