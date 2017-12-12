@@ -72,6 +72,27 @@ func addMPHandler(formatter *render.Render) http.HandlerFunc {
 	}
 }
 
+func deleteMPHandler(formatter *render.Render) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var reqBody struct {
+			ParticipatorsUsername string `json:"participators"`
+		}
+		if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
+			w.WriteHeader(http.StatusUnprocessableEntity)
+			return
+		}
+
+		title := mux.Vars(r)["title"]
+
+		meeting := entities.MeetingParticipator{
+			Title:    title,
+			Username: reqBody.ParticipatorsUsername,
+		}
+		entities.MPServ.Delete(&meeting)
+		formatter.JSON(w, http.StatusOK, struct{}{})
+	}
+}
+
 func findAllMeetingsHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		formatter.JSON(w, http.StatusOK, entities.MeetingServ.FindAll())
