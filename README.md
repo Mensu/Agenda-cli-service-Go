@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/Mensu/Agenda-cli-service-Go.svg?branch=master)](https://travis-ci.org/Mensu/Agenda-cli-service-Go)
 
-## 安装运行
+## 简单使用说明
 
 ```
 docker pull mensu/agenda-cli-service-go
@@ -16,7 +16,7 @@ docker run --rm --network host -v $PATH_TO_CLI_DATA:/data mensu/agenda-cli-servi
 
 ## 注意
 
-- 由于使用了 [cobra](github.com/spf13/cobra) 需要番羽~土啬才能编译运行
+- 由于使用了 [cobra](github.com/spf13/cobra) 需要番羽~土啬才能从零构建
 - 如果希望在屏幕 log，请**设置环境变量 DEBUG** 或**设置配置文件的 log 路径**
 - 调试时通过设置环境变量 ``MOCK`` 访问 mock 服务器
 
@@ -52,6 +52,52 @@ curUser: data/curUser.json
 - 从最开始的开发开始，**边开发边写对应的测试**，在一次次提交的过程中不断集成，减少新的改动破坏原有功能的可能性，为项目功能的稳定提供有力保障
 
 ### TODO
+
+#### 任务目标
+
+[x] 熟悉 API 设计工具，实现从资源（领域）建模，到 API 设计的过程
+[x] 使用 Github ，通过 [API 文档](https://mensu.docs.apiary.io/#)，实现 agenda 命令行项目 与 RESTful 服务项目同步开发
+[x] 使用 API 设计工具提供 Mock 服务，两个团队独立测试 API
+[x] 使用 travis 测试相关模块
+[x] 利用 dockerfile 在 docker hub 上构建一个镜像，同时包含 agenda cli 和 agenda service， 如果 mysql 包含 服务器 和 客户端一样
+
+#### 任务要求
+
+##### 重构、或新建 agenda 项目，根目录必须包含
+[x] cli 目录
+[x] service 目录
+[x] .travis —— ``.travis.yml``
+[x] apiary.apib
+[x] dockerfile —— ``Dockerfile``
+[x] LICENSE
+[x] README.md
+[x] README-yourid.md 记录你的工作摘要（个人评分依据）—— ``README-Mensu.md、README-pfjhyyj.md``
+##### API 开发
+[x] 使用 API Blueprint 设计 [API](https://mensu.docs.apiary.io/#)
+[x] 资源 URL 命名符合 RESTful 设计标准
+[x] 资源 CRUD 基本完整
+##### API 客户端开发
+[x] 可用命令 5 个以上 —— 共有 11 个可用命令
+[x] 必须有 XXX-test.go 文件
+##### 服务端开发
+[x] 使用 sqlite3 作为数据库 —— 通过 /data 目录挂载
+[x] 建议使用课程提供的服务端框架
+[x] 必须有 XXX-test.go 文件
+##### 容器镜像制作
+[x] 在 docker hub 上生成[镜像](https://hub.docker.com/r/mensu/agenda-cli-service-go/)
+[x] base 镜像 go-1.8
+[x] 需要加载 sqlite3
+[x] 同时包含客户端与服务器
+##### README.md
+[x] 有 build pass 标签
+[x] 有简短使用说明
+[x] 有系统测试的结果（包含如何下载镜像，如何启动服务器，如何使用命令行，cli 的 mock 测试结果， 综合系统测试结果）
+##### README-yourid.md
+[x] fork 项目的位置
+[x] 个人工作摘要（每次提交）
+[x] 项目小结
+
+## 系统测试结果
 
 ...
 
