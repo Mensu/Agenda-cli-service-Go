@@ -58,3 +58,9 @@ func registerHandler(formatter *render.Render) http.HandlerFunc {
 		formatter.JSON(w, http.StatusCreated, struct{}{})
 	}
 }
+
+func findAllUsersHandler(formatter *render.Render) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		formatter.JSON(w, http.StatusOK, entities.UserServ.FindAll())
+	}
+}

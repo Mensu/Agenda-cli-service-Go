@@ -10,25 +10,49 @@ services:
   - docker
 
 script:
-  # mock 测试
+  - echo 'mock 测试'
   - export MOCK= && go test -v ./cli/vendor/service
-  # 服务端测试
+  - echo '服务端测试'
   - go test -v ./service/vendor/entities
-  # 镜像构建测试
+  - echo '镜像构建测试'
   - docker build . -t agenda
-  # 综合测试
-  # 运行镜像里的服务端
+  - echo '综合测试'
+  - echo '运行服务端'
   - docker run -dit --name service -p 8080:8080 -v /service_data:/data agenda service
-  # 等待服务端启动
-  - sleep 2
+  - echo '等待服务端启动'
+  - sleep 5
   - docker ps -a
   - docker logs service
-  # 用镜像里的客户端测试注册
-  - docker run --rm --net host -v /cli_data:/data agenda cli register -u agenda -p agenda -m agenda@service.computing.com -n 12345678909
-  # 用镜像里的客户端测试登录
-  - docker run --rm --net host -v /cli_data:/data agenda cli login -u agenda -p agenda
-  # 用镜像里的客户端测试登出
+  - echo '测试帮助列表'
+  - docker run --rm --net host -v /cli_data:/data agenda cli help
+  - echo '测试注册'
+  - docker run --rm --net host -v /cli_data:/data agenda cli register -u user_test -p user_test -m user_test@service.computing.com -n 12345678909
+  - docker run --rm --net host -v /cli_data:/data agenda cli register -u user_to_delete -p user_to_delete -m user_to_delete@service.computing.com -n 12345678909
+  - docker run --rm --net host -v /cli_data:/data agenda cli register -u meeting_sponsor -p meeting_sponsor -m meeting_sponsor@service.computing.com -n 12345678909
+  - docker run --rm --net host -v /cli_data:/data agenda cli register -u meeting_participator -p meeting_participator -m meeting_participator@service.computing.com -n 12345678909
+  - echo '测试登录'
+  - docker run --rm --net host -v /cli_data:/data agenda cli login -u user_test -p user_test
+  - echo '测试列出用户列表'
+  - docker run --rm --net host -v /cli_data:/data agenda cli list
+  - echo '测试登出'
   - docker run --rm --net host -v /cli_data:/data agenda cli logout
-  # 用镜像里的客户端测试删除用户
-  - docker run --rm --net host -v /cli_data:/data agenda cli login -u agenda -p agenda
+  - echo '测试删除用户'
+  - docker run --rm --net host -v /cli_data:/data agenda cli login -u user_to_delete -p user_to_delete
   - docker run --rm --net host -v /cli_data:/data agenda cli delete-account
+  - echo '测试添加会议'
+  - docker run --rm --net host -v /cli_data:/data agenda cli login -u meeting_sponsor -p meeting_sponsor
+  - docker run --rm --net host -v /cli_data:/data agenda cli add-meeting -t meeting1 -p user_test -s 2017-01-01/12:00:00 -e 2017-01-01/13:00:00
+  - echo '测试添加会议成员'
+  - docker run --rm --net host -v /cli_data:/data agenda cli add-participator -t meeting1 -p meeting_participator
+  - echo '测试删除会议成员'
+  - docker run --rm --net host -v /cli_data:/data agenda cli delete-participator -t meeting1 -p user_test
+  - echo '测试退出会议'
+  - docker run --rm --net host -v /cli_data:/data agenda cli logout
+  - docker run --rm --net host -v /cli_data:/data agenda cli login -u meeting_participator -p meeting_participator
+  - docker run --rm --net host -v /cli_data:/data agenda cli quit-meeting -t meeting1
+  - echo '测试取消会议'
+  - docker run --rm --net host -v /cli_data:/data agenda cli logout
+  - docker run --rm --net host -v /cli_data:/data agenda cli login -u meeting_sponsor -p meeting_sponsor
+  - docker run --rm --net host -v /cli_data:/data agenda cli cancel-meeting -t meeting1
+  - docker run --rm --net host -v /cli_data:/data agenda cli show -s 2017-01-01/12:00:00 -e 2017-01-01/13:00:00
+  - docker logs service
