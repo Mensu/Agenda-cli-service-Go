@@ -20,7 +20,7 @@ script:
   - echo '运行服务端'
   - docker run -dit --name service -p 8080:8080 -v /service_data:/data agenda service
   - echo '等待服务端启动'
-  - sleep 2
+  - sleep 3
   - docker ps -a
   - docker logs service
   - echo '测试帮助列表'
