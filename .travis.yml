@@ -57,3 +57,4 @@ script:
   - docker run --rm --net host -v /cli_data:/data agenda cli login -u meeting_sponsor -p meeting_sponsor
   - docker run --rm --net host -v /cli_data:/data agenda cli cancel-meeting -t meeting1
   - docker run --rm --net host -v /cli_data:/data agenda cli show -s 2017-01-01/12:00:00 -e 2017-01-01/13:00:00
+  - docker logs service
