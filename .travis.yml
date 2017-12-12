@@ -42,8 +42,6 @@ script:
   - echo '测试添加会议'
   - docker run --rm --net host -v /cli_data:/data agenda cli login -u meeting_sponsor -p meeting_sponsor
   - docker run --rm --net host -v /cli_data:/data agenda cli add-meeting -t meeting1 -p user_test -s 2017-01-01/12:00:00 -e 2017-01-01/13:00:00
-  - echo '测试查询会议'
-  - docker run --rm --net host -v /cli_data:/data agenda cli show -s 2017-01-01/12:00:00 -e 2017-01-01/13:00:00
   - echo '测试添加会议成员'
   - docker run --rm --net host -v /cli_data:/data agenda cli add-participator -t meeting1 -p meeting_participator
   - echo '测试删除会议成员'
@@ -52,6 +50,8 @@ script:
   - docker run --rm --net host -v /cli_data:/data agenda cli logout
   - docker run --rm --net host -v /cli_data:/data agenda cli login -u meeting_participator -p meeting_participator
   - docker run --rm --net host -v /cli_data:/data agenda cli quit-meeting -t meeting1
+  - echo '测试查询会议'
+  - docker run --rm --net host -v /cli_data:/data agenda cli show -s 2017-01-01/12:00:00 -e 2017-01-01/13:00:00
   - echo '测试取消会议'
   - docker run --rm --net host -v /cli_data:/data agenda cli logout
   - docker run --rm --net host -v /cli_data:/data agenda cli login -u meeting_sponsor -p meeting_sponsor
