@@ -38,4 +38,5 @@ func initRoutes(mx *mux.Router, formatter *render.Render) {
 	mx.HandleFunc("/api/meetings", addMeetingHandler(formatter)).Methods("POST")
 	mx.HandleFunc("/api/meetings/{title}/participators", addMPHandler(formatter)).Methods("POST")
 	mx.HandleFunc("/api/meetings/{title}/participators", deleteMPHandler(formatter)).Methods("DELETE")
+	mx.HandleFunc("/api/meetings/{title}", deleteMeetingHandler(formatter)).Methods("DELETE")
 }

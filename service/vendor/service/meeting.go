@@ -93,6 +93,18 @@ func deleteMPHandler(formatter *render.Render) http.HandlerFunc {
 	}
 }
 
+func deleteMeetingHandler(formatter *render.Render) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		title := mux.Vars(r)["title"]
+
+		meeting := entities.Meeting{
+			Title: title,
+		}
+		entities.MeetingServ.Delete(&meeting)
+		formatter.JSON(w, http.StatusOK, struct{}{})
+	}
+}
+
 func findAllMeetingsHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		formatter.JSON(w, http.StatusOK, entities.MeetingServ.FindAll())
