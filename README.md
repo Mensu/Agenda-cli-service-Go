@@ -7,36 +7,104 @@
 ## 简单使用说明
 
 ```
+# 下载镜像
 docker pull mensu/agenda-cli-service-go
-# 服务端
+# 启动服务器
 docker run -dit --name agenda-sevice -v $PATH_TO_SERVER_DATA:/data -p 8080:8080 mensu/agenda-cli-service-go service
-# 客户端
+# 运行客户端
 docker run --rm --network host -v $PATH_TO_CLI_DATA:/data mensu/agenda-cli-service-go cli help
 ```
 
-## 注意
-
-- 由于使用了 [cobra](github.com/spf13/cobra) 需要番羽~土啬才能从零构建
-- 如果希望在屏幕 log，请**设置环境变量 DEBUG** 或**设置配置文件的 log 路径**
-- 调试时通过设置环境变量 ``MOCK`` 访问 mock 服务器
-
-## 客户端配置文件
-
-默认使用 ``$HOME/.agenda-go.yaml``
-
-如果找不到的话，将使用如下的默认设置
-
-```yaml
-# 工作目录。其他配置如果使用相对路径，则相对该工作目录
-cwd: .
-# log 的路径。如果环境变量里有 DEBUG 变量，则 log 会输出到 stderr
-log: /dev/null
-# 会话数据的路径。JSON 格式
-curUser: data/curUser.json
-
-```
-
 ## 项目管理与团队协作
+
+### TODO list
+
+#### 任务目标
+
+- [x] 熟悉 API 设计工具，实现从资源（领域）建模，到 API 设计的过程
+- [x] 使用 Github ，通过 [API 文档](https://mensu.docs.apiary.io/#)，实现 agenda 命令行项目 与 RESTful 服务项目同步开发
+- [x] 使用 API 设计工具提供 Mock 服务，两个团队独立测试 API
+- [x] 使用 travis 测试相关模块
+- [x] 利用 dockerfile 在 docker hub 上构建一个镜像，同时包含 agenda cli 和 agenda service， 如果 mysql 包含 服务器 和 客户端一样
+
+#### 任务要求
+
+##### 重构、或新建 agenda 项目，根目录必须包含
+- [x] cli 目录
+- [x] service 目录
+- [x] .travis —— ``.travis.yml``
+- [x] apiary.apib
+- [x] dockerfile —— ``Dockerfile``
+- [x] LICENSE
+- [x] README.md
+- [x] README-yourid.md 记录你的工作摘要（个人评分依据）—— ``README-Mensu.md、README-pfjhyyj.md``
+##### API 开发
+- [x] 使用 API Blueprint 设计 [API](https://mensu.docs.apiary.io/#)
+- [x] 资源 URL 命名符合 RESTful 设计标准
+- [x] 资源 CRUD 基本完整
+##### API 客户端开发
+- [x] 可用命令 5 个以上 —— ``共有多达 11 个可用命令``
+- [x] 必须有 XXX-test.go 文件
+##### 服务端开发
+- [x] 使用 sqlite3 作为数据库 —— ``挂载于 /data 目录``
+- [x] 建议使用课程提供的服务端框架
+- [x] 必须有 XXX-test.go 文件
+##### 容器镜像制作
+- [x] 在 docker hub 上生成[镜像](https://hub.docker.com/r/mensu/agenda-cli-service-go/)
+- [x] base 镜像 go-1.8
+- [x] 需要加载 sqlite3
+- [x] 同时包含客户端与服务器
+##### README.md
+- [x] 有 build pass 标签
+- [x] 有简短使用说明
+- [x] 有系统测试的结果（包含如何下载镜像，如何启动服务器，如何使用命令行，cli 的 mock 测试结果， 综合系统测试结果）
+##### README-yourid.md
+- [x] fork 项目的位置
+- [x] 个人工作摘要（每次提交）
+- [x] 项目小结
+
+## 系统测试的结果
+
+### 如何下载镜像
+
+注：镜像构建测试已加入 [``Travis CI``](https://travis-ci.org/Mensu/Agenda-cli-service-Go)
+
+![download](assets/download.png)
+
+### 如何启动服务器
+
+![start server](assets/start-server.png)
+
+### 如何使用命令行
+
+![cmd](assets/cmd.png)
+
+### cli 的 mock 测试结果
+
+注：mock 测试已加入 [``Travis CI``](https://travis-ci.org/Mensu/Agenda-cli-service-Go)
+
+![mock test 1](assets/mock-test-1.png)
+![mock test 2](assets/mock-test-2.png)
+![mock test 3](assets/mock-test-3.png)
+![mock test 4](assets/mock-test-4.png)
+
+### 综合系统测试结果
+
+注：综合系统测试已加入 [``Travis CI``](https://travis-ci.org/Mensu/Agenda-cli-service-Go)
+
+![integrated test 1](assets/integrated-test-1.png)
+![integrated test 2](assets/integrated-test-2.png)
+![integrated test 3](assets/integrated-test-3.png)
+
+### 持续集成
+
+- 使用 [``Travis CI``](https://travis-ci.org/Mensu/Agenda-Go)，通过执行 go test 命令运行编写好的测试文件进行持续集成
+- 从最开始的开发开始，**边开发边写对应的测试**，在一次次提交的过程中不断集成，减少新的改动破坏原有功能的可能性，为项目功能的稳定提供有力保障
+- 测试内容包括
+  + cli 的 mock 测试
+  + service 的单元测试
+  + docker 镜像构建测试
+  + docker 镜像中客户端和服务端的综合测试
 
 ### 团队协作
 
@@ -45,61 +113,6 @@ curUser: data/curUser.json
 - master ``review`` 完觉得可以，且 ``CI`` 通过，方可确认归并代码
 - master 作为 master 开发时，不得直接向 ``master`` 分支 push commit。而应该同样通过另开分支的方式进行需求开发。开发完毕后，向 master 的 ``master`` 分支发起 ``Pull Request``，并邀请团队成员 ``review``。同样，团队成员 ``review`` 完觉得可以，且 ``CI`` 通过，方可确认归并代码
 - 以上限制通过设置 Github 完成，无需由团队成员假装限制
-
-### 持续集成
-
-- 使用 [``Travis CI``](https://travis-ci.org/Mensu/Agenda-Go)，通过执行 go test 命令运行编写好的测试文件进行持续集成
-- 从最开始的开发开始，**边开发边写对应的测试**，在一次次提交的过程中不断集成，减少新的改动破坏原有功能的可能性，为项目功能的稳定提供有力保障
-
-### TODO
-
-#### 任务目标
-
-[x] 熟悉 API 设计工具，实现从资源（领域）建模，到 API 设计的过程
-[x] 使用 Github ，通过 [API 文档](https://mensu.docs.apiary.io/#)，实现 agenda 命令行项目 与 RESTful 服务项目同步开发
-[x] 使用 API 设计工具提供 Mock 服务，两个团队独立测试 API
-[x] 使用 travis 测试相关模块
-[x] 利用 dockerfile 在 docker hub 上构建一个镜像，同时包含 agenda cli 和 agenda service， 如果 mysql 包含 服务器 和 客户端一样
-
-#### 任务要求
-
-##### 重构、或新建 agenda 项目，根目录必须包含
-[x] cli 目录
-[x] service 目录
-[x] .travis —— ``.travis.yml``
-[x] apiary.apib
-[x] dockerfile —— ``Dockerfile``
-[x] LICENSE
-[x] README.md
-[x] README-yourid.md 记录你的工作摘要（个人评分依据）—— ``README-Mensu.md、README-pfjhyyj.md``
-##### API 开发
-[x] 使用 API Blueprint 设计 [API](https://mensu.docs.apiary.io/#)
-[x] 资源 URL 命名符合 RESTful 设计标准
-[x] 资源 CRUD 基本完整
-##### API 客户端开发
-[x] 可用命令 5 个以上 —— 共有 11 个可用命令
-[x] 必须有 XXX-test.go 文件
-##### 服务端开发
-[x] 使用 sqlite3 作为数据库 —— 通过 /data 目录挂载
-[x] 建议使用课程提供的服务端框架
-[x] 必须有 XXX-test.go 文件
-##### 容器镜像制作
-[x] 在 docker hub 上生成[镜像](https://hub.docker.com/r/mensu/agenda-cli-service-go/)
-[x] base 镜像 go-1.8
-[x] 需要加载 sqlite3
-[x] 同时包含客户端与服务器
-##### README.md
-[x] 有 build pass 标签
-[x] 有简短使用说明
-[x] 有系统测试的结果（包含如何下载镜像，如何启动服务器，如何使用命令行，cli 的 mock 测试结果， 综合系统测试结果）
-##### README-yourid.md
-[x] fork 项目的位置
-[x] 个人工作摘要（每次提交）
-[x] 项目小结
-
-## 系统测试结果
-
-...
 
 ## 架构设计与实现细节
 
