@@ -19,3 +19,9 @@
 - [``e8267325c9``](https://github.com/pfjhyyj/Agenda-cli-service-Go/commit/e8267325c9) 删除不必要的测试代码
 
 - [``d9e0d87``](https://github.com/Mensu/Agenda-cli-service-Go/commit/d9e0d87) 合并进入主项目，改为在主项目下的分支进行开发
+
+- [``880ccf7``](https://github.com/Mensu/Agenda-cli-service-Go/commit/880ccf7) 完善客户端Meeting部分代码，修改日志内容
+
+- [``8a57c43``](https://github.com/Mensu/Agenda-cli-service-Go/commit/8a57c43) 完善HTTPErrorHandler代码
+
+- [``60b6740``](https://github.com/Mensu/Agenda-cli-service-Go/commit/60b6740) 完善客户端User部分代码，修改日志内容
