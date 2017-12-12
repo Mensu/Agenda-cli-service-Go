@@ -105,6 +105,19 @@ func deleteMeetingHandler(formatter *render.Render) http.HandlerFunc {
 	}
 }
 
+func quitMeetingHandler(formatter *render.Render) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		title := mux.Vars(r)["title"]
+		user := checkIsLogin(r)
+		meeting := entities.MeetingParticipator{
+			Title:    title,
+			Username: user.Username,
+		}
+		entities.MPServ.Delete(&meeting)
+		formatter.JSON(w, http.StatusOK, struct{}{})
+	}
+}
+
 func findAllMeetingsHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		formatter.JSON(w, http.StatusOK, entities.MeetingServ.FindAll())
