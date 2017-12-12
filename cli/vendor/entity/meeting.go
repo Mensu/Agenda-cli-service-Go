@@ -6,7 +6,7 @@ import (
 
 // Meeting model for one meeting
 type Meeting struct {
-	Title         string   `json:"tile"`
+	Title         string   `json:"title"`
 	Speecher      string   `json:"speecher"`
 	Participators []string `json:"participators"`
 	StartTime     string   `json:"startTime"`

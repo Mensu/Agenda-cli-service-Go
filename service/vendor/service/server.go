@@ -33,4 +33,7 @@ func initRoutes(mx *mux.Router, formatter *render.Render) {
 	// Group Users
 	mx.HandleFunc("/api/users", findAllUsersHandler(formatter)).Methods("GET")
 	mx.HandleFunc("/api/users", registerHandler(formatter)).Methods("POST")
+
+	// Group Meetings
+	mx.HandleFunc("/api/meetings", addMeetingHandler(formatter)).Methods("POST")
 }
