@@ -20,10 +20,7 @@ func Panicf(format string, i ...interface{}) {
 
 // HTTPErrorHandler handle the status code from http request
 func HTTPErrorHandler(code int, msg string) (err error) {
-	if code == http.StatusOK {
-		return nil
-	}
-	if code == http.StatusCreated {
+	if code == http.StatusOK || code == http.StatusCreated {
 		return nil
 	}
 	if code == http.StatusUnauthorized {

@@ -15,7 +15,7 @@ type User struct {
 
 // AddUser adds a new user
 func AddUser(user *User) (err error) {
-	logger.Println("[userentity] try performing add user request")
+	logger.Println("[userEntity] try performing add user request")
 	var code int
 	var resBody struct {
 		Msg string `json:"msg"`
@@ -32,7 +32,7 @@ func AddUser(user *User) (err error) {
 
 // DeleteUser deletes current user
 func DeleteUser() (err error) {
-	logger.Println("[userentity] try performing delete user request")
+	logger.Println("[userEntity] try performing delete user request")
 	var code int
 	if code, err = request("DELETE", "/api/user/self", nil, nil); err != nil {
 		return

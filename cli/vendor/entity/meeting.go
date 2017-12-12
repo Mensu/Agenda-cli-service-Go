@@ -15,7 +15,7 @@ type Meeting struct {
 
 // AddMeeting add a new meeting to database
 func AddMeeting(meeting *Meeting, err error) {
-	logger.Println("[meetingmodel] try adding new meeting", meeting.Title)
+	logger.Println("[meetingEntity] try adding new meeting", meeting.Title)
 	var code int
 	var resBody struct {
 		Msg string `json:"msg"`
@@ -29,7 +29,7 @@ func AddMeeting(meeting *Meeting, err error) {
 
 // AddParticipatorToMeeting Add a Participator To Meeting
 func AddParticipatorToMeeting(title string, participator string, err error) {
-	logger.Println("[meetingmodel] try adding a participator to meeting", title)
+	logger.Println("[meetingEntity] try adding a participator to meeting", title)
 	var code int
 	var reqBody struct {
 		Participators string `json:"participators"`
@@ -63,7 +63,7 @@ func FindMeetingsByTime(startTime string, endTime string, err error) []Meeting {
 
 // DeleteMeeting delete an existed meeting
 func DeleteMeeting(title string, err error) {
-	logger.Println("[meetingmodel] try deleting a meeting", title)
+	logger.Println("[meetingEntity] try deleting a meeting", title)
 	var code int
 	var resBody struct {
 		Msg string `json:"msg"`
@@ -78,7 +78,7 @@ func DeleteMeeting(title string, err error) {
 
 // DeleteParticipatorFromMeeting delete a participator from meeting
 func DeleteParticipatorFromMeeting(title string, participator string, err error) {
-	logger.Println("[meetingmodel] try deleting a participator from meeting", title)
+	logger.Println("[meetingEntity] try deleting a participator from meeting", title)
 	var reqBody struct {
 		Participators string `json:"participators"`
 	}
