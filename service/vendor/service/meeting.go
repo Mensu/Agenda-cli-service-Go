@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/gorilla/mux"
+
 	"entities"
 
 	"github.com/unrolled/render"
@@ -46,6 +48,27 @@ func addMeetingHandler(formatter *render.Render) http.HandlerFunc {
 		entities.MPServ.Add(&meeting)
 
 		formatter.JSON(w, http.StatusCreated, struct{}{})
+	}
+}
+
+func addMPHandler(formatter *render.Render) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var reqBody struct {
+			ParticipatorsUsername string `json:"participators"`
+		}
+		if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
+			w.WriteHeader(http.StatusUnprocessableEntity)
+			return
+		}
+
+		title := mux.Vars(r)["title"]
+
+		meeting := entities.Meeting{
+			Title: title,
+			ParticipatorsUsername: []string{reqBody.ParticipatorsUsername},
+		}
+		entities.MPServ.Add(&meeting)
+		formatter.JSON(w, http.StatusOK, struct{}{})
 	}
 }
 

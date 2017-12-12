@@ -36,4 +36,5 @@ func initRoutes(mx *mux.Router, formatter *render.Render) {
 
 	// Group Meetings
 	mx.HandleFunc("/api/meetings", addMeetingHandler(formatter)).Methods("POST")
+	mx.HandleFunc("/api/meetings/{title}/participators", addMPHandler(formatter)).Methods("POST")
 }
