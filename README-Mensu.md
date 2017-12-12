@@ -20,6 +20,7 @@
 - [``5b77e971b4``](https://github.com/Mensu/Agenda-cli-service-Go/commit/5b77e971b4) [service] 初步完成搜索会议的API
 - [``ccebe92fdd``](https://github.com/Mensu/Agenda-cli-service-Go/commit/ccebe92fdd) [service] 完善 meeting API 的单元测试
 - [``d7f401638b``](https://github.com/Mensu/Agenda-cli-service-Go/commit/d7f401638b) [service] 完善 meeting_participator API 的单元测试
+- [``ea2dea56ab``](https://github.com/Mensu/Agenda-cli-service-Go/commit/ea2dea56ab) [service] 完善综合系统测试
 
 # 项目小结
 
@@ -29,4 +30,6 @@
 
 接着是学习了 API 设计工具，尝试实现了从资源（领域）建模，到 API 设计的过程，体验了 RESTful API 设计的优势。更重要的，是实践了前后端通过 API mock server 同步开发的过程。我和另一团队成员一人负责服务端，一人负责客户端，双方都遵守 github 上商定好的 API 接口，便可以不受对方进度的影响，专心进行客户端或服务端的开发，提高了开发的生产力。另外，两个团队还可以独立测试 API，更有利于模块的解耦。
 
-更重要的是，这次还实践了 Docker，初次尝试在 docker hub 上生成镜像，并使用镜像进行综合测试。
+更重要的是，这次还实践了 Docker 容器技术，初次尝试通过往 github push，触发在 Docker Hub 上生成镜像。并通过 Travis CI 对镜像的构建和构建出来的客户端、服务端进行综合系统测试，为项目持续集成。
+
+除了开发、运维方面的体会，在 web 应用开发方面，我也进一步学习了 orm 的用法，特别是涉及到表关系的时候。一涉及到关系，感觉 orm 也没有想象中的方便。或许静态语言都是这么麻烦的。
